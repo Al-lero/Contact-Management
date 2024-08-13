@@ -5,9 +5,11 @@ import com.todo.organizer.data.repository.UserRepository;
 import com.todo.organizer.dto.request.CreateUserRequest;
 import com.todo.organizer.dto.request.DeleteUserRequest;
 import com.todo.organizer.dto.request.FindUserRequest;
+import com.todo.organizer.dto.request.UpdateUserRequest;
 import com.todo.organizer.dto.response.CreateUserResponse;
 import com.todo.organizer.dto.response.DeleteUserResponse;
 import com.todo.organizer.dto.response.FindUserResponse;
+import com.todo.organizer.dto.response.UpdateUserResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +29,12 @@ class UserServiceImplTest {
     @Autowired
     private UserService userService;
 
-//    @BeforeEach
-//    void cleanup() {
-//        userRepository.deleteAll();
-//    }
+
+
+    @BeforeEach
+    void cleanup() {
+        userRepository.deleteAll();
+    }
 
     @Test
     public void testThatUserCanBeCreated(){
@@ -60,6 +64,18 @@ class UserServiceImplTest {
         DeleteUserResponse response1 = userService.deleteUser(deleteUserRequest);
         assertThat(response1.getMessage().contains("User Deleted"));
 
+    }
+
+    @Test
+    public void testThatUserCanBeUpdated(){
+        CreateUserRequest createUserRequest = new CreateUserRequest();
+        createUserRequest.setName("Alero");
+        createUserRequest.setEmail("efs");
+
+        UpdateUserRequest updateUserRequest = new UpdateUserRequest();
+        updateUserRequest.setEmail("alero.com");
+        UpdateUserResponse response = userService.updateUser(updateUserRequest);
+        assertThat(response.getMessage().contains("User Updated Successfully"));
     }
 
 

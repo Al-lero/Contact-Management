@@ -37,7 +37,7 @@ class TaskServiceImplTest {
         createTaskRequest.setUser("ojo");
         createTaskRequest.setStatus("Status");
         createTaskRequest.setDescription("for long time");
-        createTaskRequest.setDateCreated("2023-04-20T10:15:30");
+
 
         CreateTaskResponse response = taskService.createTask(createTaskRequest);
 

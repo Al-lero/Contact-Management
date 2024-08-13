@@ -9,15 +9,16 @@ import com.todo.organizer.dto.response.CreateProjectResponse;
 import com.todo.organizer.dto.response.DeleteProjectResponse;
 import com.todo.organizer.dto.response.FindProjectResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
-public class ProjectServiceImpl implements ProjectService {
 
+public class ProjectServiceImpl implements ProjectService {
+    @Autowired
     private ProjectRepository projectRepository;
 
 
@@ -28,7 +29,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
         Project project = new Project();
-        project.setCreatedAt(LocalDateTime.parse(createProjectRequest.getDateCreated()));
+        project.setCreatedAt(LocalDateTime.now());
         project.setName(createProjectRequest.getName());
         project.setDescription(createProjectRequest.getDescription());
         Project save = projectRepository.save(project);
@@ -61,7 +62,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public DeleteProjectResponse deleteProject(DeleteProjectRequest deleteProjectRequest) {
         if(findById(deleteProjectRequest.getId()).isEmpty()){
-            throw new RuntimeException("No Project");
+            throw new RuntimeException("Project deleted");
         }
 
         Project project = findById(deleteProjectRequest.getId()).get();

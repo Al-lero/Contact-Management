@@ -11,15 +11,16 @@ import com.todo.organizer.dto.response.DeleteTaskResponse;
 import com.todo.organizer.dto.response.FindTaskResponse;
 import com.todo.organizer.dto.response.FindUserResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
-public class TaskServiceImpl implements TaskService{
 
+public class TaskServiceImpl implements TaskService{
+    @Autowired
     private TaskRepository taskRepository;
 
 
@@ -31,7 +32,7 @@ public class TaskServiceImpl implements TaskService{
         Task task = new Task();
         task.setName(createTaskRequest.getName());
         task.setDescription(createTaskRequest.getDescription());
-        task.setCreatedAt(LocalDateTime.parse(createTaskRequest.getDateCreated()));
+        task.setCreatedAt(LocalDateTime.now());
         Task save = taskRepository.save(task);
 
         CreateTaskResponse response = new CreateTaskResponse();

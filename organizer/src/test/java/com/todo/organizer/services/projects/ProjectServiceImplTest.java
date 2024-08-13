@@ -31,7 +31,6 @@ class ProjectServiceImplTest {
         CreateProjectRequest createProjectRequest = new CreateProjectRequest();
         createProjectRequest.setName("Offical");
         createProjectRequest.setDescription("office purpose");
-        createProjectRequest.setDateCreated("2023-04-20T10:15:30");
 
         CreateProjectResponse response = projectService.createProject(createProjectRequest);
 

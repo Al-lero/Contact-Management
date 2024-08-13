@@ -1,28 +1,61 @@
 package com.todo.organizer.web;
 
-import com.todo.organizer.data.models.User;
+import com.todo.organizer.data.repository.UserRepository;
 import com.todo.organizer.dto.request.CreateUserRequest;
+import com.todo.organizer.dto.request.DeleteUserRequest;
+import com.todo.organizer.dto.request.FindUserRequest;
+import com.todo.organizer.dto.response.CreateUserResponse;
+import com.todo.organizer.dto.response.DeleteUserResponse;
+import com.todo.organizer.dto.response.FindUserResponse;
 import com.todo.organizer.services.user.UserService;
-import lombok.AllArgsConstructor;
+import org.hibernate.validator.internal.constraintvalidators.bv.time.past.PastValidatorForThaiBuddhistDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
-@AllArgsConstructor
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-//    @PostMapping("/create")
-//    public ResponseEntity <User> createUser(@RequestBody CreateUserRequest createUserRequest){
-//        return new ResponseEntity<>(userService.createUser(createUserRequest), HttpStatus.CREATED);
-//    }
-//}
+    @Autowired
+    private UserRepository userRepository;
+
+
+    @PostMapping("/create")
+    public ResponseEntity <?> createUser(@RequestBody CreateUserRequest createUserRequest){
+      try{
+          CreateUserResponse createUserResponse = userService.createUser(createUserRequest);
+          return new ResponseEntity<>(createUserResponse,HttpStatus.CREATED);
+      }
+      catch(Exception e){
+          return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+      }
+    }
+
+    @DeleteMapping("delete")
+    public ResponseEntity<?> deleteUser(@RequestBody DeleteUserRequest deleteUserRequest){
+        try{
+            DeleteUserResponse deleteUser = userService.deleteUser(deleteUserRequest);
+            return new ResponseEntity<>(deleteUser,HttpStatus.CREATED);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("findUser")
+    public ResponseEntity<?> findUser(@RequestBody FindUserRequest findUserRequest){
+        try {
+            FindUserResponse findUser = userService.findUser(findUserRequest);
+            return new ResponseEntity<>(findUser, HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
 }
+

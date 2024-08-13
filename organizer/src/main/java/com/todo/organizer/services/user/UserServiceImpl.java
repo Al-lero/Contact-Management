@@ -5,18 +5,22 @@ import com.todo.organizer.data.repository.UserRepository;
 import com.todo.organizer.dto.request.CreateUserRequest;
 import com.todo.organizer.dto.request.DeleteUserRequest;
 import com.todo.organizer.dto.request.FindUserRequest;
+import com.todo.organizer.dto.request.UpdateUserRequest;
 import com.todo.organizer.dto.response.CreateUserResponse;
 import com.todo.organizer.dto.response.DeleteUserResponse;
 import com.todo.organizer.dto.response.FindUserResponse;
+import com.todo.organizer.dto.response.UpdateUserResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
-public class UserServiceImpl implements UserService{
 
+public class UserServiceImpl implements UserService{
+    @Autowired
     private UserRepository userRepository;
 
 
@@ -29,10 +33,11 @@ public class UserServiceImpl implements UserService{
             User user = new User();
         user.setName(createUserRequest.getName());
         user.setEmail(createUserRequest.getEmail());
-        User save = userRepository.save(user);
+        userRepository.save(user);
 
         CreateUserResponse response = new CreateUserResponse();
         response.setMessage("User created Successfully");
+        response.setId(user.getId());
         return response;
     }
 
@@ -41,13 +46,12 @@ public class UserServiceImpl implements UserService{
         if(findById(deleteUserRequest.getId()).isEmpty()){
             throw new RuntimeException("No User Found");
         }
-
         User user = findById(deleteUserRequest.getId()).get();
         userRepository.delete(user);
 
        DeleteUserResponse response = new DeleteUserResponse();
        response.setMessage("User deleted Successfully");
-        return response;
+       return response;
 
     }
 
@@ -64,6 +68,11 @@ public class UserServiceImpl implements UserService{
         FindUserResponse response = new FindUserResponse();
         response.setMessage("User Found");
         return response;
+    }
+
+    @Override
+    public UpdateUserResponse updateUser(UpdateUserRequest updateUserRequest) {
+        return null;
     }
 
 

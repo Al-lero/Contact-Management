@@ -7,7 +7,6 @@ import lombok.Setter;
 @Setter
 public class CreateTaskRequest {
     private String name;
-    private String dateCreated;
     private String description;
     private String status;
     private String user;

@@ -12,6 +12,5 @@ import java.util.List;
 public class CreateProjectRequest {
     private String name;
     private String description;
-    private String dateCreated;
-    private List<Task> tasks = new ArrayList<>();
+
 }
