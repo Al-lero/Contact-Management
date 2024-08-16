@@ -50,26 +50,28 @@ class TaskServiceImplTest {
 
     @Test
     public void testThatTaskCanBeFoundById(){
-        Task task = new Task();
-        task.setName("savings");
-        task.setDescription("for a long time");
-        task.setId("66b8cfc95dee1f57d768f4ea");
-        taskRepository.save(task);
+        CreateTaskRequest createTaskRequest = new CreateTaskRequest();
+        createTaskRequest.setName("savings");
+        createTaskRequest.setUser("ojo");
+        createTaskRequest.setStatus("Status");
+        createTaskRequest.setDescription("for long time");
+        CreateTaskResponse response1 = taskService.createTask(createTaskRequest);
         FindTaskRequest findTaskRequest = new FindTaskRequest();
-        findTaskRequest.setId("66b8cfc95dee1f57d768f4ea");
+        findTaskRequest.setId(response1.getId());
         FindTaskResponse response = taskService.findTask(findTaskRequest);
         assertTrue(response.getMessage().contains("Task Found"));
     }
 
     @Test
     public void testThatTaskCanBeDeletedById(){
-        Task task = new Task();
-        task.setName("savings");
-        task.setDescription("for a long time");
-        task.setId("66b8cfc95dee1f57d768f4ea");
-        taskRepository.save(task);
+        CreateTaskRequest createTaskRequest = new CreateTaskRequest();
+        createTaskRequest.setName("savings");
+        createTaskRequest.setUser("ojo");
+        createTaskRequest.setStatus("Status");
+        createTaskRequest.setDescription("for long time");
+        CreateTaskResponse response1 = taskService.createTask(createTaskRequest);
         DeleteTaskRequest deleteTaskRequest = new DeleteTaskRequest();
-        deleteTaskRequest.setId("66b8cfc95dee1f57d768f4ea");
+        deleteTaskRequest.setId(response1.getId());
         DeleteTaskResponse response = taskService.deleteTask(deleteTaskRequest);
         assertTrue(response.getMessage().contains("Task Deleted SuccessFully"));
     }
@@ -81,11 +83,11 @@ class TaskServiceImplTest {
         createTaskRequest.setUser("ojo");
         createTaskRequest.setStatus("Status");
         createTaskRequest.setDescription("for long time");
-        taskService.createTask(createTaskRequest);
+        CreateTaskResponse response1 = taskService.createTask(createTaskRequest);
         UpdateTaskRequest request = new UpdateTaskRequest();
+        request.setId(response1.getId());
         request.setUser("user");
         request.setName("savings");
-        request.setNewName("game");
         request.setDescription("erfjfjff");
         UpdateTaskResponse response = taskService.updateTask(request);
         assertThat(response.getMessage()).contains("Updated Successfully");

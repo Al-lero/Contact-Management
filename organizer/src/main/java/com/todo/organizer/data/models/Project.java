@@ -1,6 +1,7 @@
 package com.todo.organizer.data.models;
 
 import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Document
 public class Project {
     private String id;
     private String name;

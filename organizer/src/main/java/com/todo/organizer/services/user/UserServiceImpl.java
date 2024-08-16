@@ -72,7 +72,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UpdateUserResponse updateUser(UpdateUserRequest updateUserRequest) {
-        User user = findByEmailAndReturnUser(updateUserRequest.getEmail());
+        User user = findById(updateUserRequest.getId())
+                .orElseThrow(()->new RuntimeException("User not found"));
         user.setEmail(updateUserRequest.getEmail());
         user.setName(updateUserRequest.getName());
         UpdateUserResponse response = new UpdateUserResponse();

@@ -34,6 +34,7 @@ public class TaskServiceImpl implements TaskService{
         Task save = taskRepository.save(task);
 
         CreateTaskResponse response = new CreateTaskResponse();
+        response.setId(task.getId());
         response.setMessage("Task Created");
         return response;
 
@@ -71,10 +72,10 @@ public class TaskServiceImpl implements TaskService{
 
     @Override
     public UpdateTaskResponse updateTask(UpdateTaskRequest request) {
-        Task task = findByName(request.getName());
+        Task task = findById(request.getId())
+                .orElseThrow(()->new RuntimeException("Task not found"));
         task.setName(request.getNewName());
         task.setUser(request.getUser());
-        task.setStatus(request.getStatus());
         task.setDescription(request.getDescription());
         taskRepository.save(task);
         UpdateTaskResponse response = new UpdateTaskResponse();

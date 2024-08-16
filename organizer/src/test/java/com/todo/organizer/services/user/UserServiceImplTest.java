@@ -50,17 +50,25 @@ class UserServiceImplTest {
 
     @Test
     public void testThatUserCanBeFindById(){
+        CreateUserRequest createUserRequest = new CreateUserRequest();
+        createUserRequest.setName("Alero");
+        createUserRequest.setEmail("efs");
+        CreateUserResponse response = userService.createUser(createUserRequest);
         FindUserRequest findUserRequest = new FindUserRequest();
-        findUserRequest.setId("66b7c390a7cbf81512d0caf9");
-        FindUserResponse response = userService.findUser(findUserRequest);
-        assertThat(response.getMessage().contains("User Found"));
+        findUserRequest.setId(response.getId());
+        FindUserResponse response1 = userService.findUser(findUserRequest);
+        assertThat(response1.getMessage().contains("User Found"));
 
     }
 
     @Test
     public void testThatUserCanBeDeletedByEmail(){
+        CreateUserRequest createUserRequest = new CreateUserRequest();
+        createUserRequest.setName("Alero");
+        createUserRequest.setEmail("efs");
+        CreateUserResponse response = userService.createUser(createUserRequest);
         DeleteUserRequest deleteUserRequest = new DeleteUserRequest();
-        deleteUserRequest.setId("66b7c390a7cbf81512d0caf9");
+        deleteUserRequest.setId(response.getId());
         DeleteUserResponse response1 = userService.deleteUser(deleteUserRequest);
         assertThat(response1.getMessage().contains("User Deleted"));
 
@@ -71,9 +79,9 @@ class UserServiceImplTest {
         CreateUserRequest createUserRequest = new CreateUserRequest();
         createUserRequest.setName("Alero");
         createUserRequest.setEmail("efs");
-        userService.createUser(createUserRequest);
+        CreateUserResponse response1 = userService.createUser(createUserRequest);
         UpdateUserRequest updateUserRequest = new UpdateUserRequest();
-        updateUserRequest.setEmail("efs");
+        updateUserRequest.setId(response1.getId());
         UpdateUserResponse response = userService.updateUser(updateUserRequest);
         assertThat(response.getMessage().contains("Updated Successfully"));
     }

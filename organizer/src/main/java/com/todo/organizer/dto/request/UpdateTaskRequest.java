@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 public class UpdateTaskRequest {
+    private String id;
     private String newName;
     private String name;;
     private String user;
-    private Status status;
     private String description;
 }
