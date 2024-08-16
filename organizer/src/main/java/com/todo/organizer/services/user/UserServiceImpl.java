@@ -72,9 +72,17 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UpdateUserResponse updateUser(UpdateUserRequest updateUserRequest) {
-        return null;
+        User user = findByEmailAndReturnUser(updateUserRequest.getEmail());
+        user.setEmail(updateUserRequest.getEmail());
+        user.setName(updateUserRequest.getName());
+        UpdateUserResponse response = new UpdateUserResponse();
+        response.setMessage("Updated Successfully");
+        return response;
     }
 
+    private User findByEmailAndReturnUser(String email){
+        return userRepository.findByEmail(email);
+    }
 
     private boolean findByEmail(String email){
         return userRepository.findByEmail(email)!=null;

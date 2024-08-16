@@ -6,10 +6,8 @@ import com.todo.organizer.data.repository.TaskRepository;
 import com.todo.organizer.dto.request.CreateTaskRequest;
 import com.todo.organizer.dto.request.DeleteTaskRequest;
 import com.todo.organizer.dto.request.FindTaskRequest;
-import com.todo.organizer.dto.response.CreateTaskResponse;
-import com.todo.organizer.dto.response.DeleteTaskResponse;
-import com.todo.organizer.dto.response.FindTaskResponse;
-import com.todo.organizer.dto.response.FindUserResponse;
+import com.todo.organizer.dto.request.UpdateTaskRequest;
+import com.todo.organizer.dto.response.*;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,6 +67,23 @@ public class TaskServiceImpl implements TaskService{
         DeleteTaskResponse response = new DeleteTaskResponse();
         response.setMessage("Task Deleted SuccessFully");
         return response;
+    }
+
+    @Override
+    public UpdateTaskResponse updateTask(UpdateTaskRequest request) {
+        Task task = findByName(request.getName());
+        task.setName(request.getNewName());
+        task.setUser(request.getUser());
+        task.setStatus(request.getStatus());
+        task.setDescription(request.getDescription());
+        taskRepository.save(task);
+        UpdateTaskResponse response = new UpdateTaskResponse();
+        response.setMessage("Updated Successfully");
+        return response;
+    }
+
+    private Task findByName(String name) {
+        return taskRepository.findByName(name);
     }
 
     private Optional<Task> findById(String id) {

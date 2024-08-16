@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class UpdateUserRequest {
     private String email;
+    private String name;
 
 
 }

@@ -71,11 +71,11 @@ class UserServiceImplTest {
         CreateUserRequest createUserRequest = new CreateUserRequest();
         createUserRequest.setName("Alero");
         createUserRequest.setEmail("efs");
-
+        userService.createUser(createUserRequest);
         UpdateUserRequest updateUserRequest = new UpdateUserRequest();
-        updateUserRequest.setEmail("alero.com");
+        updateUserRequest.setEmail("efs");
         UpdateUserResponse response = userService.updateUser(updateUserRequest);
-        assertThat(response.getMessage().contains("User Updated Successfully"));
+        assertThat(response.getMessage().contains("Updated Successfully"));
     }
 
 

@@ -1,12 +1,8 @@
 package com.todo.organizer.web;
 
 import com.todo.organizer.data.repository.UserRepository;
-import com.todo.organizer.dto.request.CreateUserRequest;
-import com.todo.organizer.dto.request.DeleteUserRequest;
-import com.todo.organizer.dto.request.FindUserRequest;
-import com.todo.organizer.dto.response.CreateUserResponse;
-import com.todo.organizer.dto.response.DeleteUserResponse;
-import com.todo.organizer.dto.response.FindUserResponse;
+import com.todo.organizer.dto.request.*;
+import com.todo.organizer.dto.response.*;
 import com.todo.organizer.services.user.UserService;
 import org.hibernate.validator.internal.constraintvalidators.bv.time.past.PastValidatorForThaiBuddhistDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "*")
 public class UserController {
 
     @Autowired
@@ -57,5 +54,17 @@ public class UserController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
     }
+
+    @PatchMapping("updateUser")
+    public ResponseEntity<?> updateUser(@RequestBody UpdateUserRequest updateUserRequest) {
+        try {
+            UpdateUserResponse updatedUser = userService.updateUser(updateUserRequest);
+            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
 }
 

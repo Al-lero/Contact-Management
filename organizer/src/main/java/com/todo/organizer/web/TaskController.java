@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/task")
+@CrossOrigin(origins = "*")
 public class TaskController {
 
     @Autowired
@@ -48,6 +49,17 @@ public class TaskController {
         try {
             FindTaskResponse findTask = taskService.findTask(findTaskRequest);
             return new ResponseEntity<>(findTask, HttpStatus.CREATED);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PatchMapping("updateTask")
+    public ResponseEntity<?> updateTask(@RequestBody UpdateTaskRequest updateTaskRequest){
+        try{
+            UpdateTaskResponse updateTask = taskService.updateTask(updateTaskRequest);
+            return new ResponseEntity<>(updateTask, HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);

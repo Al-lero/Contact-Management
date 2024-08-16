@@ -5,15 +5,17 @@ import com.todo.organizer.data.repository.TaskRepository;
 import com.todo.organizer.dto.request.CreateTaskRequest;
 import com.todo.organizer.dto.request.DeleteTaskRequest;
 import com.todo.organizer.dto.request.FindTaskRequest;
+import com.todo.organizer.dto.request.UpdateTaskRequest;
 import com.todo.organizer.dto.response.CreateTaskResponse;
 import com.todo.organizer.dto.response.DeleteTaskResponse;
 import com.todo.organizer.dto.response.FindTaskResponse;
+import com.todo.organizer.dto.response.UpdateTaskResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.assertj.core.api.FactoryBasedNavigableListAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -70,5 +72,22 @@ class TaskServiceImplTest {
         deleteTaskRequest.setId("66b8cfc95dee1f57d768f4ea");
         DeleteTaskResponse response = taskService.deleteTask(deleteTaskRequest);
         assertTrue(response.getMessage().contains("Task Deleted SuccessFully"));
+    }
+
+    @Test
+    public void testThatTaskCanBeUpdated(){
+        CreateTaskRequest createTaskRequest = new CreateTaskRequest();
+        createTaskRequest.setName("savings");
+        createTaskRequest.setUser("ojo");
+        createTaskRequest.setStatus("Status");
+        createTaskRequest.setDescription("for long time");
+        taskService.createTask(createTaskRequest);
+        UpdateTaskRequest request = new UpdateTaskRequest();
+        request.setUser("user");
+        request.setName("savings");
+        request.setNewName("game");
+        request.setDescription("erfjfjff");
+        UpdateTaskResponse response = taskService.updateTask(request);
+        assertThat(response.getMessage()).contains("Updated Successfully");
     }
 }
