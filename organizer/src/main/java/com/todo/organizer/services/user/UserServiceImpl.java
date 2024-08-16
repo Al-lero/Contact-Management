@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -68,6 +69,11 @@ public class UserServiceImpl implements UserService{
         FindUserResponse response = new FindUserResponse();
         response.setMessage("User Found");
         return response;
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
     }
 
     @Override

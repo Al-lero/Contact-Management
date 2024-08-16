@@ -5,14 +5,14 @@ import com.todo.organizer.data.repository.ProjectRepository;
 import com.todo.organizer.dto.request.CreateProjectRequest;
 import com.todo.organizer.dto.request.DeleteProjectRequest;
 import com.todo.organizer.dto.request.FindProjectRequest;
-import com.todo.organizer.dto.response.CreateProjectResponse;
-import com.todo.organizer.dto.response.DeleteProjectResponse;
-import com.todo.organizer.dto.response.FindProjectResponse;
+import com.todo.organizer.dto.request.UpdateProjectRequest;
+import com.todo.organizer.dto.response.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -67,5 +67,18 @@ class ProjectServiceImplTest {
 
     }
 
+    @Test
+    public void testThatProjectCanBeUpdated() {
+        CreateProjectRequest createProjectRequest = new CreateProjectRequest();
+        createProjectRequest.setName("Offical");
+        createProjectRequest.setDescription("office purpose");
+        CreateProjectResponse response = projectService.createProject(createProjectRequest);
 
+        UpdateProjectRequest request = new UpdateProjectRequest();
+        request.setId(response.getId());
+        request.setName("jdjd");
+        request.setDescription("hddjdj");
+        UpdateProjectResponse response1 = projectService.updateProject(request);
+        assertThat(response1.getMessage()).contains("Successful");
+    }
 }

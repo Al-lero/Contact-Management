@@ -1,15 +1,20 @@
 package com.todo.organizer.web;
 
+import com.todo.organizer.data.models.User;
 import com.todo.organizer.data.repository.UserRepository;
 import com.todo.organizer.dto.request.*;
 import com.todo.organizer.dto.response.*;
 import com.todo.organizer.services.user.UserService;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.internal.constraintvalidators.bv.time.past.PastValidatorForThaiBuddhistDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "*")
@@ -64,6 +69,16 @@ public class UserController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
 
+    }
+    @GetMapping("displayAllUser")
+    public ResponseEntity<?> displayAllUser(){
+        try {
+            List<User> findAll = userService.findAllUsers();
+            return new ResponseEntity<>(new ResponseApi(true, findAll),HttpStatus.OK );
+        }
+        catch (Exception exception){
+            return new ResponseEntity<>(new ResponseApi(false, exception),HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

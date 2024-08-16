@@ -1,5 +1,6 @@
 package com.todo.organizer.web;
 
+import com.todo.organizer.data.models.Task;
 import com.todo.organizer.data.repository.TaskRepository;
 import com.todo.organizer.dto.request.*;
 import com.todo.organizer.dto.response.*;
@@ -8,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.yaml.snakeyaml.tokens.ScalarToken;
+
+import java.util.List;
 
 
 @RestController
@@ -64,5 +68,18 @@ public class TaskController {
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAllTasks(){
+       try {
+           List<Task> findAllTasks = taskService.findAllTasks();
+           return new ResponseEntity<>(new ResponseApi(true, findAllTasks),
+                   HttpStatus.OK);
+       }
+       catch (Exception exception){
+           return new ResponseEntity<>(new ResponseApi(false, exception),
+                   HttpStatus.BAD_REQUEST);
+       }
     }
 }

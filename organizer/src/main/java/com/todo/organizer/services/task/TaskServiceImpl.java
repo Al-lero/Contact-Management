@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -81,6 +82,11 @@ public class TaskServiceImpl implements TaskService{
         UpdateTaskResponse response = new UpdateTaskResponse();
         response.setMessage("Updated Successfully");
         return response;
+    }
+
+    @Override
+    public List<Task> findAllTasks() {
+        return taskRepository.findAll();
     }
 
     private Task findByName(String name) {

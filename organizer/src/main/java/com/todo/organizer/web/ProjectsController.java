@@ -1,5 +1,6 @@
 package com.todo.organizer.web;
 
+import com.todo.organizer.data.models.Project;
 import com.todo.organizer.data.repository.ProjectRepository;
 import com.todo.organizer.dto.request.*;
 import com.todo.organizer.dto.response.*;
@@ -8,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/project")
@@ -51,6 +54,29 @@ public class ProjectsController {
         }
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PatchMapping("updateProject")
+    public ResponseEntity<?> updateProject(@RequestBody UpdateProjectRequest updateProjectRequest){
+       try {
+           UpdateProjectResponse updateProject = projectService.updateProject(updateProjectRequest);
+           return new ResponseEntity<>(updateProject, HttpStatus.OK);
+       } catch (Exception e){
+           return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+       }
+    }
+
+    @GetMapping
+    public ResponseEntity<?> displayAllProjects(){
+        try {
+            List<Project> findAllProjects = projectService.findAllProjects();
+            return new ResponseEntity<>(new ResponseApi(true, findAllProjects ),
+                    HttpStatus.OK);
+        }
+        catch (Exception exception){
+            return new ResponseEntity<>(new ResponseApi(false, exception),
+                    HttpStatus.BAD_REQUEST);
         }
     }
 }

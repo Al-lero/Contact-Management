@@ -2,10 +2,7 @@ package com.todo.organizer.services.user;
 
 import com.todo.organizer.data.models.User;
 import com.todo.organizer.data.repository.UserRepository;
-import com.todo.organizer.dto.request.CreateUserRequest;
-import com.todo.organizer.dto.request.DeleteUserRequest;
-import com.todo.organizer.dto.request.FindUserRequest;
-import com.todo.organizer.dto.request.UpdateUserRequest;
+import com.todo.organizer.dto.request.*;
 import com.todo.organizer.dto.response.CreateUserResponse;
 import com.todo.organizer.dto.response.DeleteUserResponse;
 import com.todo.organizer.dto.response.FindUserResponse;
@@ -85,6 +82,16 @@ class UserServiceImplTest {
         UpdateUserResponse response = userService.updateUser(updateUserRequest);
         assertThat(response.getMessage().contains("Updated Successfully"));
     }
+
+//    @Test
+//    public void testThatUserCanFindAll(){
+//        CreateUserRequest createUserRequest = new CreateUserRequest();
+//        createUserRequest.setName("Alero");
+//        createUserRequest.setEmail("efs");
+//        CreateUserResponse response1 = userService.createUser(createUserRequest);
+//        FindAllUserRequest findAllUserRequest =
+//
+//    }
 
 
 }
